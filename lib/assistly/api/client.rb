@@ -77,12 +77,23 @@ module Assistly
         path = build_path(options)
         puts "Sending #{verb} request to #{path}..." if debug_mode
         response = client.send(verb, path)
-        puts response.body.to_s if debug_mode
-        hash = parse(response)
-        if hash['results']
-          Result.new(hash, self)
+        case response
+        when Net::HTTPSuccess
+          puts response.body.to_s if debug_mode
+          hash = parse(response)
+          if hash['results']
+            Result.new(hash, self)
+          else
+            self.new(hash)
+          end
+        when Net::HTTPUnauthorized
+          raise "Unauthorized! Please check your credentials"
+        when Net::HTTPClientError
+          raise "Client error (#{response.code}): #{response.body}"
+        when Net::HTTPServerError
+          raise "Server error (#{response.code}): #{response.body}"
         else
-          self.new(hash)
+          raise "Unknown response: #{response.inspect}"
         end
       end
   
