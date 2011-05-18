@@ -1,0 +1,12 @@
+= Assist.ly API client
+
+Gem to access the Assist.ly API.
+
+== Usage
+
+    authentication = Assistly::API::Authentication.new(consumer_key, consumer_secret, subdomain, 
+      :access_token_key => access_token_key, :access_token_secret => access_token_secret)
+      
+    Assistly::API::Base.authentication = authentication
+    case = Assistly::API::Case.find(1)
+    # ...
