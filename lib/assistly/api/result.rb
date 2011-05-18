@@ -1,7 +1,7 @@
 module Assistly
   module API
     
-    class Result < DelegateClass(Enumerable)
+    class Result
       include Enumerable
       attr_reader :results, :total, :count, :page
       
