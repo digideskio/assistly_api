@@ -9,7 +9,10 @@ Gem::Specification.new do |s|
   s.email = 'soleone@gmail.com'
   s.homepage = 'http://github.com/Soleone/assistly'
   
-  s.files = Dir['lib/**/*']
-  s.require_path = 'lib'
+  s.add_development_dependency('rake')
+  s.add_runtime_dependency('oauth', '~> 0.4.4')
   
+  s.files = Dir['lib/**/*']
+  s.test_files = Dir['test/**/*_test.rb']
+  s.require_path = 'lib'
 end

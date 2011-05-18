@@ -1,3 +1,2 @@
-source :gemcutter
-
-gem 'oauth', '0.4.4'
+source :rubygems
+gemspec
