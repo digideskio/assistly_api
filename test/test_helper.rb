@@ -14,7 +14,9 @@ require 'assistly'
 # access_token_secret: 'xyz'
   
 filename = File.dirname(__FILE__) + '/credentials.yml'
-CREDENTIALS = YAML.load(File.read(filename)) if File.exist?(filename)
+
+raise "Please create a test/credentials.yml file with credentials in order to test the library." unless File.exist?(filename)
+CREDENTIALS = YAML.load(File.read(filename))
 
 class Test::Unit::TestCase
   def subdomain
