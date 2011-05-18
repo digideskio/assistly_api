@@ -1,6 +1,10 @@
-require File.dirname(__FILE__) + '/../lib/assistly'
+require 'rubygems'
+require 'bundler/setup'
+
 require 'test/unit'
 require 'yaml'
+
+require 'assistly'
 
 # Specify your credentials for the remote tests in test/credentials.yml
 # subdomain:           'my_site'
