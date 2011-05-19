@@ -23,6 +23,15 @@ module Assistly
       
       alias_method :size, :count
       alias_method :length, :count
+      
+      def total_pages(per_page = nil)
+        per_page ||= count
+        (total.to_f / per_page.to_f).ceil
+      end
+      
+      def more?(per_page = nil)
+        total_pages(per_page) > page
+      end
     end
   end
 end

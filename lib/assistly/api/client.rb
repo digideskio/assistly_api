@@ -30,7 +30,21 @@ module Assistly
       def find(options = {})
         get(options)
       end
-      alias all find
+      
+      def find_each(options = {}, paging_options = {})
+        
+        per_page     = paging_options[:count]      || 100
+        current_page = paging_options[:start_page] || 1
+        sleep_after  = paging_options[:sleep]      || nil
+        
+        begin
+          result = find(options.merge(:page => current_page, :count => per_page))
+          result.each { |r| yield(r) }
+          sleep(sleep_after) if sleep_after
+        end while result.more?
+      end
+      
+      alias_method :all, :find
 
       private
 
