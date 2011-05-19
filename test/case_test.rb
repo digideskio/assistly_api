@@ -21,7 +21,7 @@ class CaseTest < Test::Unit::TestCase
   def test_get_cases_by_customer_email
     cases = Case.find(:email => 'dennistheisen@gmail.com', :count => 1)
     assert_equal 1, cases.count
-    assert_equal 1, cases.size
+    assert cases.total > 0    
     assert_equal 1, cases.page
     puts cases.first.inspect
   end

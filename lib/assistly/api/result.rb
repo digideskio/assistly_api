@@ -20,6 +20,9 @@ module Assistly
       def each(&blk)
         @results.each(&blk)
       end
+      
+      alias_method :size, :count
+      alias_method :length, :count
     end
   end
 end
