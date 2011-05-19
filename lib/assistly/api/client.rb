@@ -69,7 +69,15 @@ module Assistly
       end
   
       def build_params(params)
-        params.map{|key, value| "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"}.join('&')
+        params.map{|key, value| "#{CGI.escape(key.to_s)}=#{encode_param(value)}"}.join('&')
+      end
+      
+      def encode_param(value)
+        case value
+          when DateTime, Date, Time; value.strftime('%s')
+          when Integer;  value.to_s
+          else CGI.escape(value.to_s)
+        end
       end
   
       def request(verb, options = {})
