@@ -6,37 +6,37 @@ module Assistly
       HTTP_VERBS = [:get, :post, :put, :delete, :head]
 
       @@debug_mode = false
-  
+
       def debug_mode=(debug)
         @@debug_mode = debug
       end
-  
+
       def debug_mode
         @@debug_mode
       end
-  
+
       def authentication=(authentication)
         @@authentication = authentication
       end
-  
+
       def authentication
         @@authentication
       end
-  
+
       def client
         @@client ||= @@authentication.access_token
       end
-  
+
       def find(options = {})
         get(options)
       end
-      
+
       def find_each(options = {}, paging_options = {})
-        
+
         per_page     = paging_options[:count]      || 100
         current_page = paging_options[:start_page] || 1
         sleep_after  = paging_options[:sleep]      || nil
-        
+
         begin
           result = find(options.merge(:page => current_page, :count => per_page))
           result.each { |r| yield(r) }
@@ -44,7 +44,7 @@ module Assistly
           current_page += 1
         end while result.more?
       end
-      
+
       alias_method :all, :find
 
       private
@@ -52,27 +52,27 @@ module Assistly
       def get(options = {})
         request(:get, options)
       end
-  
+
       def post(options = {})
         request(:post, options)
       end
-  
+
       def put(options = {})
         request(:put, options)
       end
-  
+
       def resource_path
         "#{BASE_PATH}/#{resource_plural}"
       end
-  
+
       def resource_singular
         self.name.split('::').last.downcase
       end
-      
+
       def resource_plural
         "#{resource_singular}s"
       end
-      
+
       def build_path(options, format_extension = true)
         options = options.dup
         path = resource_path
@@ -82,11 +82,11 @@ module Assistly
         path << "?#{build_params(options)}" unless options.empty?
         path
       end
-  
+
       def build_params(params)
         params.map{|key, value| "#{CGI.escape(key.to_s)}=#{encode_param(value)}"}.join('&')
       end
-      
+
       def encode_param(value)
         case value
           when DateTime, Date, Time; value.strftime('%s')
@@ -94,7 +94,7 @@ module Assistly
           else CGI.escape(value.to_s)
         end
       end
-  
+
       def request(verb, options = {})
         raise ArgumentError, "must be one of #{HTTP_VERBS.join(',')}" unless HTTP_VERBS.include?(verb.to_sym)
         path = build_path(options)
@@ -119,7 +119,7 @@ module Assistly
           raise "Unknown response: #{response.inspect}"
         end
       end
-  
+
       def parse(response, format = DEFAULT_FORMAT)
         case format.to_sym
         when :json
