@@ -12,6 +12,10 @@ module Assistly
       def to_hash
         @table.dup
       end
+      
+      def id
+        @table[:id]
+      end
     end
   end
 end
