@@ -1,6 +1,7 @@
 module Assistly
   module API
     module Client
+
       BASE_PATH = "/api/v1"
       DEFAULT_FORMAT = :json
       HTTP_VERBS = [:get, :post, :put, :delete, :head]
@@ -30,6 +31,8 @@ module Assistly
       def find(options = {})
         get(options)
       end
+      
+      alias_method :all, :find
 
       def find_each(options = {}, paging_options = {})
 
@@ -48,8 +51,6 @@ module Assistly
         end while result.more?
       end
 
-      alias_method :all, :find
-
       private
 
       def get(options = {})
@@ -59,7 +60,7 @@ module Assistly
       def post(options = {})
         request(:post, options)
       end
-
+      
       def put(options = {})
         request(:put, options)
       end
