@@ -41,6 +41,7 @@ module Assistly
           result = find(options.merge(:page => current_page, :count => per_page))
           result.each { |r| yield(r) }
           sleep(sleep_after) if sleep_after
+          current_page += 1
         end while result.more?
       end
       
