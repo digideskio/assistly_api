@@ -38,7 +38,10 @@ module Assistly
         sleep_after  = paging_options[:sleep]      || nil
 
         begin
+          puts "Requesting page #{current_page} of #{per_page} #{resource_singular} records..." if debug_mode
           result = find(options.merge(:page => current_page, :count => per_page))
+          puts "Number of records: #{result.total}. Pages: #{result.total_pages}" if debug_mode && current_page == 1
+        
           result.each { |r| yield(r) }
           sleep(sleep_after) if sleep_after
           current_page += 1
@@ -102,7 +105,7 @@ module Assistly
         response = client.send(verb, path)
         case response
         when Net::HTTPSuccess
-          puts response.body.to_s if debug_mode
+          # puts response.body.to_s if debug_mode
           hash = parse(response)
           if hash['results']
             Result.new(hash, self)
