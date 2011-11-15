@@ -14,7 +14,6 @@ module Assistly
         @results = hash['results'].collect do |resource|
           klass.new(resource)
         end
-        super(@results)
       end
       
       def each(&blk)
