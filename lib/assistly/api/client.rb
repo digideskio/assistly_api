@@ -127,7 +127,9 @@ module Assistly
       def parse(response, format = DEFAULT_FORMAT)
         case format.to_sym
         when :json
-          JSON.parse(response.body)
+          hash = JSON.parse(response.body)
+          raise "Expected JSON hash but got #{response.body.to_s.inspect}!" unless hash.kind_of?(Hash)
+          return hash
         else
           response.body
         end
