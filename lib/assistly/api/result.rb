@@ -11,7 +11,7 @@ module Assistly
         @page  = hash['page'].to_i
         return unless hash['results']
         
-        @results = hash['results'].collect do |resource|
+        @results = hash['results'].compact.collect do |resource|
           klass.new(resource)
         end
       end
