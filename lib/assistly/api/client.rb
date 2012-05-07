@@ -6,7 +6,7 @@ module Assistly
       DEFAULT_FORMAT = :json
       HTTP_VERBS = [:get, :post, :put, :delete, :head]
 
-      @@debug_mode = false
+      @@debug_mode = true
 
       def debug_mode=(debug)
         @@debug_mode = debug
@@ -36,7 +36,7 @@ module Assistly
 
       def find_each(options = {}, paging_options = {})
 
-        per_page     = paging_options[:count]      || 100
+        per_page     = paging_options[:count]      || 1000
         current_page = paging_options[:start_page] || 1
         sleep_after  = paging_options[:sleep]      || nil
 
